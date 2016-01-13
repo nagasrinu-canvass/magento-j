@@ -34,7 +34,6 @@ public class CustomerService extends MagentoBaseService {
         if (limit < 1) {
             throw new IllegalArgumentException("Limit should be a positive integer and > 0");
         }
-//        String queryString = "/firecart/customers?page="+page+"&limit="+limit;
         String queryString = "/customers?page="+page+"&limit="+limit;
         Response response = execute(queryString);        
         String responseBody = response.getBody();

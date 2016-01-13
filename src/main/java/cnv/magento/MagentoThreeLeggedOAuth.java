@@ -32,7 +32,6 @@ public class MagentoThreeLeggedOAuth extends DefaultApi10a {
 
     @Override
     public String getAuthorizationUrl(Token requestToken) {
-//            return BASE_URL + "admin/oauth_authorize?oauth_token="
         return baseUrl + "admin/oauth_authorize?oauth_token="
                 + requestToken.getToken(); //this implementation is for admin roles only...
     }

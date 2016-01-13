@@ -123,6 +123,26 @@ public class Order extends MagentoBaseModel {
         private String name;
         @SerializedName("price")
         private float price;
+        @SerializedName("product_url")
+        private String productUrl;
+        @SerializedName("image_url")
+        private String imgUrl;
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public String getProductUrl() {
+            return productUrl;
+        }
+
+        public void setProductUrl(String productUrl) {
+            this.productUrl = productUrl;
+        }
 
         public long getId() {
             return id;
