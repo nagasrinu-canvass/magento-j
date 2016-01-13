@@ -35,7 +35,6 @@ public class MagentoBaseService {
     }
 
     protected Response execute(String queryString) {
-//        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
         OAuthService service = new ServiceBuilder().provider(new MagentoThreeLeggedOAuth(client.getCredentials().getShopUrl())).
                 apiKey(client.getCredentials().getConsumerKey()).
                 apiSecret(client.getCredentials().getConsumerSecret()).

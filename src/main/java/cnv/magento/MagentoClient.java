@@ -9,6 +9,7 @@ import cnv.magento.service.MagentoBaseService;
 import java.util.HashMap;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.Token;
+import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
 /**
@@ -69,40 +70,29 @@ public class MagentoClient {
         return obj;
     }
     
-    /**
-     * This method will give the temporary tokens
-     * @param MAGENTO_API_KEY
-     * @param MAGENTO_API_SECRET
-     * @return 
-     */
-//    public static Token getRequestToken(String MAGENTO_API_KEY, String MAGENTO_API_SECRET) {
-//        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
-//                apiKey().
-//                apiSecret(MAGENTO_API_SECRET).
-//                build();
-//
-//        System.out.println("=== Mage v1.7.0.2 OAuth Workflow ===");
-//        System.out.println();
-//
-//        // Obtain the Request Token
-//        System.out.println("Fetching the Request Token...");
-//        Token requestToken = service.getRequestToken();
-//        System.out.println("token: " + requestToken.getRawResponse());
-//        System.out.println();
-//
-//        System.out.println("Now go and authorize Scribe here:");
-//        System.out.println(service.getAuthorizationUrl(requestToken));
-//        return requestToken;
-//    }
+    public HashMap getRequestTokenAndAuthorizationUrl(){
+        HashMap map = new HashMap();
+        OAuthService service = new ServiceBuilder().provider(new MagentoThreeLeggedOAuth(creds.getShopUrl())).
+                apiKey(creds.getConsumerKey()).
+                apiSecret(creds.getConsumerSecret()).
+                build();
+        Token requestToken = service.getRequestToken();
+        map.put("token", requestToken.getToken());
+        map.put("secret", requestToken.getSecret());
+        map.put("authorizationUrl", service.getAuthorizationUrl(requestToken));
+        return map;
+    }
     
-//    public static void getAcessToken(String token, String tokenSecret, String verifierStr) {
-//        Token requestToken = new Token(token, tokenSecret);
-//        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
-//                apiKey(MAGENTO_API_KEY).
-//                apiSecret(MAGENTO_API_SECRET).
-//                build();
-//        Verifier verifier = new Verifier(verifierStr);
-//        Token accessToken = service.getAccessToken(requestToken, verifier);
-//        System.out.println("accessToken = " + accessToken);
-//    }
+    public Token getAcessToken(String token, String tokenSecret, String verifierStr){
+        OAuthService service = new ServiceBuilder().provider(new MagentoThreeLeggedOAuth(creds.getShopUrl())).
+                apiKey(creds.getConsumerKey()).
+                apiSecret(creds.getConsumerSecret()).
+                build();
+        Verifier verifier = new Verifier(verifierStr);
+        Token requestToken = new Token(token, tokenSecret);
+        Token accessToken = service.getAccessToken(requestToken, verifier);
+        creds.setAccessKey(accessToken.getToken());
+        creds.setAccessSecret(accessToken.getSecret());
+        return accessToken;
+    }
 }
