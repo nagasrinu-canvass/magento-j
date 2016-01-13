@@ -39,7 +39,6 @@ public class MagentoBaseService {
                 apiKey(client.getCredentials().getConsumerKey()).
                 apiSecret(client.getCredentials().getConsumerSecret()).
                 build();
-        System.out.println(client.getBaseUrl() + queryString);
         Token permanentToken = new Token(client.getCredentials().getAccessKey(), client.getCredentials().getAccessSecret());
         OAuthRequest request = new OAuthRequest(Verb.GET, client.getBaseUrl() + queryString);
         request.addHeader("Content-Type", "application/json");
