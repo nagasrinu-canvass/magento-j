@@ -14,19 +14,33 @@ public class MagentoCredentials {
     private String consumerSecret;
     private String accessKey;
     private String accessSecret;
+    private String customRestApi;
 
     private MagentoCredentials(String shopUrl, String consumerKey, String consumerSecret, String accessKey, String accessSecret) {
+        this(shopUrl, consumerKey, consumerSecret, accessKey, accessSecret, "");
+    }
+
+    private MagentoCredentials(String shopUrl, String consumerKey, String consumerSecret, String accessKey, String accessSecret, String customRestApi) {
         this.shopUrl = shopUrl;
         this.consumerKey = consumerKey;
         this.consumerSecret = consumerSecret;
         this.accessKey = accessKey;
         this.accessSecret = accessSecret;
+        this.customRestApi = customRestApi;
     }
 
     private MagentoCredentials(String shopUrl, String consumerKey, String consumerSecret) {
         this.shopUrl = shopUrl;
         this.consumerKey = consumerKey;
         this.consumerSecret = consumerSecret;
+    }
+
+    public String getCustomRestApi() {
+        return customRestApi;
+    }
+
+    public void setCustomRestApi(String customRestApi) {
+        this.customRestApi = customRestApi;
     }
     public String getAccessKey() {
         return accessKey;
@@ -77,5 +91,9 @@ public class MagentoCredentials {
 
     public static MagentoCredentials createWithToken(String shopUrl, String consumerKey, String consumerSecret, String accessKey, String accessSecret) {
         return new MagentoCredentials(shopUrl, consumerKey, consumerSecret, accessKey, accessSecret);
+    }
+
+    public static MagentoCredentials createWithTokenCustomRestApi(String shopUrl, String consumerKey, String consumerSecret, String accessKey, String accessSecret, String customRestApi) {
+        return new MagentoCredentials(shopUrl, consumerKey, consumerSecret, accessKey, accessSecret, customRestApi);
     }
 }

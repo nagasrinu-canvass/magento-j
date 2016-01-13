@@ -36,13 +36,11 @@ public class MagentoClient {
     
     public MagentoClient(MagentoCredentials credentails) {
         this.creds = credentails;
-        baseUrl = creds.getShopUrl()+"/api/rest";
-//        if (creds.hasAccessToken()) {
-//            baseUrl = "https://" + creds.getShopName() + ".myshopify.com";
-//        } else {
-//            baseUrl = "https://" + creds.getApiKey()
-//                    + ":" + creds.getPassword() + "@" + creds.getShopName() + ".myshopify.com";
-//        }
+        String customRestApi = "";
+        if(creds.getCustomRestApi() != null && !creds.getCustomRestApi().isEmpty()){
+           customRestApi = "/"+creds.getCustomRestApi();
+        }
+        baseUrl = creds.getShopUrl()+"/api/rest"+customRestApi;
     }
     
     public MagentoCredentials getCredentials() {
@@ -77,25 +75,25 @@ public class MagentoClient {
      * @param MAGENTO_API_SECRET
      * @return 
      */
-    public static Token getRequestToken(String MAGENTO_API_KEY, String MAGENTO_API_SECRET) {
-        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
-                apiKey(MAGENTO_API_KEY).
-                apiSecret(MAGENTO_API_SECRET).
-                build();
-
-        System.out.println("=== Mage v1.7.0.2 OAuth Workflow ===");
-        System.out.println();
-
-        // Obtain the Request Token
-        System.out.println("Fetching the Request Token...");
-        Token requestToken = service.getRequestToken();
-        System.out.println("token: " + requestToken.getRawResponse());
-        System.out.println();
-
-        System.out.println("Now go and authorize Scribe here:");
-        System.out.println(service.getAuthorizationUrl(requestToken));
-        return requestToken;
-    }
+//    public static Token getRequestToken(String MAGENTO_API_KEY, String MAGENTO_API_SECRET) {
+//        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
+//                apiKey().
+//                apiSecret(MAGENTO_API_SECRET).
+//                build();
+//
+//        System.out.println("=== Mage v1.7.0.2 OAuth Workflow ===");
+//        System.out.println();
+//
+//        // Obtain the Request Token
+//        System.out.println("Fetching the Request Token...");
+//        Token requestToken = service.getRequestToken();
+//        System.out.println("token: " + requestToken.getRawResponse());
+//        System.out.println();
+//
+//        System.out.println("Now go and authorize Scribe here:");
+//        System.out.println(service.getAuthorizationUrl(requestToken));
+//        return requestToken;
+//    }
     
 //    public static void getAcessToken(String token, String tokenSecret, String verifierStr) {
 //        Token requestToken = new Token(token, tokenSecret);

@@ -35,10 +35,12 @@ public class MagentoBaseService {
     }
 
     protected Response execute(String queryString) {
-        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
+//        OAuthService service = new ServiceBuilder().provider(MagentoThreeLeggedOAuth.class).
+        OAuthService service = new ServiceBuilder().provider(new MagentoThreeLeggedOAuth(client.getCredentials().getShopUrl())).
                 apiKey(client.getCredentials().getConsumerKey()).
                 apiSecret(client.getCredentials().getConsumerSecret()).
                 build();
+        System.out.println(client.getBaseUrl() + queryString);
         Token permanentToken = new Token(client.getCredentials().getAccessKey(), client.getCredentials().getAccessSecret());
         OAuthRequest request = new OAuthRequest(Verb.GET, client.getBaseUrl() + queryString);
         request.addHeader("Content-Type", "application/json");
